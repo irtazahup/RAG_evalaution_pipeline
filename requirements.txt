@@ -8,7 +8,7 @@ uvicorn
 groq
 numpy
 PyPDF2
-sentence-transformers
+
 langchain
 langchain-community
 langchain-classic
