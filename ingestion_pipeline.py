@@ -1,3 +1,4 @@
+import asyncio
 import os
 import time
 import uuid
@@ -64,25 +65,25 @@ def _normalize_embedding(raw_embedding):
     return _to_serializable(raw_embedding)
 
 
-def _delete_document_vectors(document_id, vector_ids):
+async def _delete_document_vectors(document_id, vector_ids):
     if not vector_ids:
         return
 
     try:
-        index.delete(ids=vector_ids)
+        await asyncio.to_thread(index.delete, ids=vector_ids)
         print(f"Deleted {len(vector_ids)} vectors for document {document_id}")
     except Exception as cleanup_error:
         print(f"Failed to clean up vectors for document {document_id}: {cleanup_error}")
 
 
-def ingest_pdf(file_path: str):
+async def ingest_pdf(file_path: str):
     document_id = str(uuid.uuid4())
     timestamp = time.time()
     filename = os.path.basename(file_path)
 
     # ✅ Load PDF
     loader = PyPDFLoader(file_path)
-    pages = loader.load()
+    pages = await asyncio.to_thread(loader.load)
 
     # ✅ Chunking (≈500 tokens)
     splitter = RecursiveCharacterTextSplitter(
@@ -90,7 +91,7 @@ def ingest_pdf(file_path: str):
         chunk_overlap=200,
     )
 
-    docs = splitter.split_documents(pages)
+    docs = await asyncio.to_thread(splitter.split_documents, pages)
     total_chunks = len(docs)
 
     texts = []
@@ -115,7 +116,8 @@ def ingest_pdf(file_path: str):
 
             for attempt in range(MAX_RETRIES):
                 try:
-                    embedding_response = hf_client.feature_extraction(
+                    embedding_response = await asyncio.to_thread(
+                        hf_client.feature_extraction,
                         [text],
                         model="sentence-transformers/all-MiniLM-L6-v2",
                     )
@@ -126,7 +128,7 @@ def ingest_pdf(file_path: str):
                         "values": embedding,
                         "metadata": _to_serializable(meta),
                     }
-                    index.upsert(vectors=[vector])
+                    await asyncio.to_thread(index.upsert, vectors=[vector])
                     vector_ids.append(chunk_id)
                     print(f"Stored chunk {i + 1}/{total_chunks} for {filename}")
                     break
@@ -137,7 +139,7 @@ def ingest_pdf(file_path: str):
                         print(
                             f"Retrying chunk {i + 1}/{total_chunks} for {filename} after error: {exc}"
                         )
-                        time.sleep(1)
+                        await asyncio.sleep(1)
                         continue
 
                     raise RuntimeError(
@@ -150,8 +152,8 @@ def ingest_pdf(file_path: str):
                 )
 
     except Exception as exc:
-        _delete_document_vectors(document_id, vector_ids)
+        await _delete_document_vectors(document_id, vector_ids)
         raise RuntimeError(f"Ingestion failed for {filename}: {exc}") from exc
 
-    add_document(document_id, filename, total_chunks)
+    await asyncio.to_thread(add_document, document_id, filename, total_chunks)
     return document_id, total_chunks
