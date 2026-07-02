@@ -5,7 +5,7 @@ import shutil
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
 from config import settings
-from ingestion_pipeline import ingest_pdf
+from modules.ingestion_pipeline import ingest_pdf
 
 router = APIRouter(
     prefix="/pdf",
