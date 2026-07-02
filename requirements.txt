@@ -1,0 +1,15 @@
+
+huggingface_hub
+
+python-dotenv
+pinecone
+fastapi
+uvicorn
+groq
+numpy
+PyPDF2
+sentence-transformers
+langchain
+langchain-community
+langchain-classic
+pypdf
