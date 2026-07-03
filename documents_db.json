@@ -18,5 +18,50 @@
         "filename": "IrtezaAIEngineerFAST.pdf",
         "chunk_count": 3,
         "timestamp": 1782996087.8094676
+    },
+    "38e1d570-b78a-4e0b-8824-48735dacd611": {
+        "filename": "Middleware - FastAPI.pdf",
+        "chunk_count": 4,
+        "timestamp": 1783077379.1729455
+    },
+    "e0f984ea-73ad-4c62-bcea-091c0733f8f3": {
+        "filename": "CORS (Cross-Origin Resource Sharing) - FastAPI.pdf",
+        "chunk_count": 5,
+        "timestamp": 1783080867.8410099
+    },
+    "52cc0d9f-945e-482d-8ac8-025d48a8bd22": {
+        "filename": "Query Parameter Models - FastAPI.pdf",
+        "chunk_count": 5,
+        "timestamp": 1783080901.5526147
+    },
+    "59d83fb3-2c55-44cd-b0d6-22b92699e0fe": {
+        "filename": "Path Parameters and Numeric Validations - FastAPI.pdf",
+        "chunk_count": 13,
+        "timestamp": 1783081017.6651337
+    },
+    "a587d72d-1c77-48c6-8209-8e1550739f27": {
+        "filename": "First Steps - FastAPI.pdf",
+        "chunk_count": 13,
+        "timestamp": 1783081074.1622832
+    },
+    "0851f6bf-ae58-49a9-a910-f2a44fcd6df1": {
+        "filename": "Path Parameters - FastAPI.pdf",
+        "chunk_count": 13,
+        "timestamp": 1783081182.1003084
+    },
+    "18f9475c-dda9-4182-b779-43c263e73393": {
+        "filename": "Query Parameters - FastAPI.pdf",
+        "chunk_count": 6,
+        "timestamp": 1783081383.947376
+    },
+    "582b38b2-efac-4ff8-bcc7-f758d02e20c2": {
+        "filename": "Request Body - FastAPI.pdf",
+        "chunk_count": 11,
+        "timestamp": 1783081617.8909707
+    },
+    "091dbb13-e21a-4a6a-922a-ff3cf0b5a58e": {
+        "filename": "Query Parameters and String Validations - FastAPI.pdf",
+        "chunk_count": 32,
+        "timestamp": 1783081717.8721938
     }
 }
